@@ -24,23 +24,23 @@ This lab will include:
 ### 🚧 Network Segments 
 
  1. Management Network (vmbr0)
-    Purpose: Proxmox administration and internet access 
+  -  Purpose: Proxmox administration and internet access 
 
  2. Coporate Network (vmbr1)
-    Purpose: "Production" environment with Active Directory 
-    Contains: Domain controllers, workstations, file servers
+  -  Purpose: "Production" environment with Active Directory 
+  -  Contains: Domain controllers, workstations, file servers
  
  3. Security Tools Network (vmbr2)
-    Purpose: SIEM, monitoring, and security infrastructure
-    Contains: Splunk, Wazuh, TheHive, MISP 
+  -  Purpose: SIEM, monitoring, and security infrastructure
+  -  Contains: Splunk, Wazuh, TheHive, MISP 
 
  4. DMZ (vmbr3)
-    Purpose: Vulnerable applications and exposed services 
-    Contains: Metasploitable, DVWA, web applications 
+  -  Purpose: Vulnerable applications and exposed services 
+  -  Contains: Metasploitable, DVWA, web applications 
 
  5. Red Team Network (vmbr4)
-    Purpose: Isolated attacked infrastructure 
-    Contains: Kali Linux, attack tools, C2 servers 
+  -  Purpose: Isolated attacked infrastructure 
+  -  Contains: Kali Linux, attack tools, C2 servers 
 
 ## 📚 What I Aim To Learn 
 
