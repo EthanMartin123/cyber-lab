@@ -1,4 +1,4 @@
-# Applied Incident Response
+### Applied Incident Response
 
 **Author:** Steve Anson 
 **Status:** Reading  
@@ -10,6 +10,14 @@
 To learn and apply incident response best practices within my cybersecurity home lab
 
 ## Key Takeaways
+To succeed in Cybersecurity you need:
+ - Good IT housekeeping
+ - To know what "normal" looks like in your network 
+ - An understanding of attacker's motivations
+ - Expertise with a variety of tools (Firewalls, SIEMs, EDR)
+ - Good telemetry (Failing to collect adequate telemetry (logs, network packet captures, and other records of events that occur throughout the network) in advance of an incident is an easy way to lose the war before the first battle begins.)
+ - An understanding of how an attack is conducted (Cyber Kill Chain, MITRE ATT&CK Framework) 
+ - Ability to use deception techniques 
 
 ## Chapter Notes
 
@@ -198,7 +206,152 @@ Once a foothold is gained, attackers will pillage systems for additional intelli
 ARP cache, checking log entries, using network browsing activity, and target scans are common techniques to find additional information and credentials.
 
 ### Chapter 2: Incident Readiness
-...
+
+**Cyber Resiliency** is the ability to anticipate, withstand, recover from, and adapt to adverse conditions, stress, attacks, or compromises on systems taht include cyber resources.
+
+[Developing Cyber Resilient Systems: A Systems Security Engineering Approach](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-160v2r1.pdf)
+
+Incident response is one component of a larger, active defense process.
+
+[The Sliding Scale of Cyber Security](https://www.sans.org/white-papers/36240)
+
+To be effective...
+
+**IR must coordinate with security monitoring team as well as operations teams that control the network environment**
+**Good IT housekeeping including understanding the assets that comprise the network**
+**Security monitoring operations detecting potential threats and escalating them for further incident response**
+**IR must identify scope of the incident and develop a plan to remediate the impact of the advesary**
+**This plan should be communicated and coordinated with the various teams to contain, eradicate, and recover from the adversary action**
+**Threat Intelligence used to improve the preventive and detective controls throughout the network**
+
+[Incident Response Recommendations and Considerations for Cybersecurity Risk Management](https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-61r3.pdf)
+
+"Systems themselves cannot provide an active defense; systems can only server as tools to teh active defender ... What makese advanced threats persistent
+and dangerous is the adaptive and intelligent adversary behind the keyboard. Countering these adversaries requires equally flexible and intelligent defenders" - Robert M. Lee
+
+**Request Tracker for Incident Response (RTIR)** - used to track various categories of information, storing artifacts, tracking request tickets, facilitating information sharing and communication, and more.
+[More information on RTIR](https://requesttracker.com/rtir/)
+[Fast Incident Response (FIR)](https://github.com/certsocietegenerale/FIR)
+[The Hive](https://strangebee.com/)
+
+## Preparing Your Technology
+
+Failing to collect adequate telemetry (logs, network packet captures, and other records of events that occur throughout the network) in advance of an incident is an easy way to lose the war before the first battle begins. 
+
+In order to identify the abnormal, you must have a clear understanding of what normal looks like. 
+
+**Basic IT Housekeeping should include...**
+ - understand the processes, services, and ports in use
+ - have accurate and up-to-date IT asset inventory
+ - maintaining an organized system for change management, including updates and patches
+ - have accurate network diagrams
+
+"There is no such thing as advanced defense, only flawless execution of the basics."
+
+**Network Segmentation can be done on...**
+ - Layer 3 using subnets, including security mechanisms provided by firewalls or other security screening devices
+ - Layer 2 using VLANs on switches
+
+**ZERO-TRUST NETWORKS**
+ - The use of microsegmentation, application-aware firewalls, least-privilege access, and other related
+   technologies to constrain user activity and prevent lateral movement by an advesary.
+
+
+**Threat Intelligence** is processed informaiton regarding threat actors, malicious tools, adversary techniques,
+and other details that may impact the threats faced by your organization and their accompanying risks. 
+
+### Ensuring Adequate Visibility
+
+**Compliance SIEM** collects and stores all data from the network. This leads to long query times and a lot of time
+to produce a result.
+
+**Tactical SIEM** collects high-value security event records and is used for incident response procedures. 
+
+[Spotting the Adversary with Windows Event Log Monitoring(Revision 2)](https://massarobi.wordpress.com/wp-content/uploads/2017/03/spotting-the-adversary-with-windows-event-log-monitoring.pdf)
+
+[Malware Archaeology Windows Log Cheat Sheet](https://www.malwarearchaeology.com/cheat-sheets)
+
+**Important Log Sources for a tactical SIEM**
+
+DNS Logs
+    Attackers use C2 infrastructure to interact with victim networks, send commands, receive stolen information, update malware, and managed hijacked systems. DNS is a primse source of information about attacker activity for defenders.
+    DNS logs can proactively monitor for known-malicious domains or hosts and generate an alert when a match is found.
+
+HTTP/HTTPs Logs
+    These logs should be monitored to alert:
+        known bad URLs
+        unusual user agents
+        abnormaly long URLs
+        communicationt to known bad domains
+        recurring beacons
+        abnormally large numbers of connections
+        large amount of data being transmitted outbound
+        unusual encoding
+        any other potential indicators
+
+System Logs
+    These logs shuould be monitored to alert:
+        successful and failed authenticaation attempts
+        access to specific services such as web logs
+        access to important files
+        modifications to the kernel such as the loading of kernel modules
+        any other potential indicators
+
+Endpoint Detection Logs
+    These can consist of endpoint detection and response technologies or antivirus products and should be sent to a tactical SIEM
+
+Network boundarie/Segment boundarie Logs
+    NetFlow or IPFIX can create log data by observing network traffic as it passes. 
+    
+    A flow consists of a source IP address, a source port (if applicable), a destination IP address, a destination port (if applicable), and the IP type of service being used to facilitate the network communication.
+
+    If an attacker IP address has been identified, you can quickly query flow data to identify which systems in the network have interaceted with the malicious IP.
+    If an attacker is laterally moving within the network over a specific port, flow data can help identify suspicious activity and other compromised hosts
+    If data exfiltration is suspected, flow data can identify systems that have had unusually large outbound transmissions and IP address to which the data was sent. 
+
+Firewall Logs
+    These can show:
+        connections that were dropped
+        ids/ips system logs showing signature matches
+        antimalware logs
+        data loss prevention systems
+        other network security devices
+
+    Network Security Monitoring refers to monitoring of communications on the wire for security-related events. A prime example of this being Zeek.
+
+### Deception Techniques
+
+A honeypot is a system in an environemtn that entices attackers but have no legitimate business purpose. These are used to reveal attackers within a network. 
+This concept can be extended to user accounts, file, and hashes in memory. These types of decoy items are often referred to as canaries.
+
+[Cowries | fake SSH service]((https://github.com/cowrie/cowrie)
+[WebLabryinth | fake website]((https://github.com/mayhemiclabs/weblabyrinth)
+
+
+[Modern Honey Network (MHN)](https://github.com/threatstream/mhn) is an easy way to deploy several different honeypot technologies.
+
+A decoy domain account can be created for the sole purpose of detecting malicious activity. 
+ - use a very long, randomized password
+
+A honey hash is a credential that is inserted into the memroy of a running system. It should not impact the system or ever reveal its presence, unless an attacker uses a tool like Mimikatz to steal credentails adn resuse them within
+the environment. To ensure the account cannot be used by an attacker, you canplant it in memory with a password hash that does not represent the account's actual password using tools like the New-HoneyHash.ps1 script: https://github.com/EmpireProject/Empire/blob/master/data/module_source/management/New-HoneyHash.ps1
+
+**To create honey hashes...**
+1. createa  privileged honey account that you will never use in production, such as a member of the Domain Administrators group
+2. Congiure with a long, randomized password to prevent any realistic exposure from password guessing.
+3. Configure SIEM to alert on any attempts to log on with this account
+4. Plant honey hashes on system using [New-HoneyHash.ps1](https://github.com/EmpireProject/Empire/blob/master/data/module_source/management/New-HoneyHash.ps1)
+5. Script takes domain, account name, and account password parameters
+6. Credentails are then stored in the memory of the Local Security Authority Subsystem Service (LSASS) process
+
+When attackers try and use these credentials with the incorrect password placed into memory, their login attempts can force an alert of a failed logon attempt for a decoy account. 
+
+It's possible to use startup scripts, which will push out through group policy, to place honey hashes on multiple systems throughout the environment. 
+
+It's possible to place files that have no legitmate business purpose on production servers and configure the files with detailed auditing to alert on any interaction. Names of files should look enticing to attackers.
+
+[More information on Canary Tokens](https://canarytokens.org)
+
 
 ## Applied to My Lab
 - Implemented X based on Chapter 5
